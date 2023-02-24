@@ -1,33 +1,35 @@
 class Movie < ActiveRecord::Base
 
-    def self.create_with_title(title)
-        Movie.create(title: title)
+    def self.create_with_title(text)
+        Movie.create(title: text)
     end
 
     def self.first_movie
-        Movie.first
+        self.all.first
     end
 
     def self.last_movie
-        Movie.last
+        self.all.last
     end
 
     def self.movie_count
-        Movie.count
+        self.all.count
     end
 
     def self.find_movie_with_id(id)
-        Movie.find(id)
-    end
-    def self.find_movie_with_attributes(title)
-        Movie.find_by title
-    end
-    def self.find_movies_after_2002
-        Movie.where("release_date > 2002")
+        self.all.find(id)
     end
 
-    def update_with_attributes(attributes)
-        self.update (attributes)
+    def self.find_movie_with_attributes(item)
+        self.find_by(item)
+    end
+
+    def self.find_movies_after_2002
+        self.where('release_date > 2002')
+    end
+
+    def update_with_attributes(att)
+        self.update(att)
     end
 
     def self.update_all_titles(title)
@@ -35,13 +37,10 @@ class Movie < ActiveRecord::Base
     end
 
     def self.delete_by_id(id)
-        Movie.delete(id)
+        self.destroy_by(id: id)
     end
 
     def self.delete_all_movies
-        Movie.delete_all
+        self.destroy_all
     end
-
-    
-    
 end
